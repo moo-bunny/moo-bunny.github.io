@@ -221,6 +221,9 @@
   .logo{font-size:20px;font-weight:600}
   .empty{font-size:14px}
   footer{font-size:12px}
+  /* ชื่อกับป้ายอาชีพอยู่คนละบรรทัดเสมอ (จอกว้างอย่างไอแพดเคยวางข้างกัน) */
+  .hero .nametag{display:block;width:fit-content;max-width:100%;margin:24px auto 0}
+  .hero .tag{display:block;width:fit-content;margin:16px auto 0}
 </style>
 </head>
 <body>
@@ -346,7 +349,7 @@ function renderBio() {
   const B = BIO;
   $("#bTh").textContent = B.th || ""; $("#bEn").textContent = B.en || ""; $("#bTag").textContent = B.tag || ""; $("#bTag").hidden = !B.tag;
   const ph = $("#photo"), old = ph.querySelector("img"); if (old) old.remove();
-  const img = new Image(); img.alt = B.th || "น้ำปิง"; img.src = B.photo || "namping.jpg"; img.onerror = () => img.remove(); ph.prepend(img);
+  const img = new Image(); img.alt = B.th || "น้ำปิง"; img.src = PHOTO || B.photo || "namping.jpg"; img.onerror = () => img.remove(); ph.prepend(img);
   $("#bBio").innerHTML = String(B.bio || "").split(/\n\s*\n/).filter(x => x.trim()).map(x => "<p>" + esc(x.trim()).replace(/\n/g, "<br>") + "</p>").join("");
   $("#bFacts").innerHTML = [["วันเกิด", B.birth], ["บ้านเกิด", B.home], ["ส่วนสูง", B.height], ["สังกัด", B.agency]].filter(x => x[1]).map(([k, v]) => '<div class="fact"><small>' + k + "</small><b>" + esc(v) + "</b></div>").join("");
   const h = v => encodeURIComponent(String(v || "").replace(/^@/, ""));
@@ -382,7 +385,13 @@ function renderEvents() {
 
 seg($("#workSeg"), [["all", "ทั้งหมด"], ["series", "ซีรีส์"], ["movie", "ภาพยนตร์"], ["show", "รายการ"], ["mv", "MV"]], "all", k => { WF = k; renderWorks(k); });
 seg($("#ytSeg"), [["all", "ทั้งหมด"], ["clip", "คลิป / สัมภาษณ์"], ["song", "เพลง"]], "all", k => { YF = k; renderYT(k); });
-let WF = "all", YF = "all";
+let WF = "all", YF = "all", PHOTO = "";
+try { PHOTO = localStorage.getItem("nsite-photo") || ""; } catch (e) {}
+fetch(DB + "/boards/" + BOARD + "/img/photo.json", { cache: "no-store" }).then(r => r.ok ? r.json() : null).then(v => {
+  v = typeof v === "string" ? v : ""; if (v === PHOTO) return; PHOTO = v;
+  try { if (v) localStorage.setItem("nsite-photo", v); else localStorage.removeItem("nsite-photo"); } catch (e) {}
+  renderBio();
+}).catch(() => {});
 function renderAll() { renderBio(); renderWorks(WF); renderPres(); renderYT(YF); renderEvents(); }
 renderAll();
 /* โหลดข้อมูลจากหลังบ้าน: เก็บสำเนาไว้ในเครื่อง เปิดครั้งต่อไปขึ้นทันที */

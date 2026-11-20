@@ -35,6 +35,8 @@
   #msg.on{opacity:1} #msg.err{background:#C2185B}
   .lock{display:flex;gap:8px}.lock input{flex:1}
   [hidden]{display:none!important}
+  .pv{width:150px;aspect-ratio:4/5;border-radius:16px;overflow:hidden;background:var(--pinkL);display:grid;place-items:center;text-align:center}
+  .pv img{width:100%;height:100%;object-fit:cover}
 </style>
 </head>
 <body>
@@ -69,9 +71,10 @@ const timeout = (p, ms) => Promise.race([p, new Promise((_, no) => setTimeout(()
 const isDenied = e => /permission.?denied/i.test(String(e && (e.code || e.message)));
 
 /* ---------- อ่าน / เขียนบอร์ด (วิธีเดียวกับหลังบ้านหลัก: ส่งเฉพาะโพสต์ที่เปลี่ยน + รหัสยืนยัน) ---------- */
+let PHOTO = "";
 async function load() {
   const snap = await timeout(get(ref(db, "boards/" + BID)), 30000);
-  const raw = snap.val() || {}, rp = raw.posts || {};
+  const raw = snap.val() || {}, rp = raw.posts || {}; PHOTO = (raw.img && raw.img.photo) || "";
   posts = (Array.isArray(rp) ? rp : Object.values(rp)).filter(p => p && p.id);
 }
 function apply(list, b) {
@@ -102,9 +105,10 @@ async function commit(body) {
       new Set(Object.keys(q).concat(Object.keys(o || {}))).forEach(f => { if (f === "u") return; if (JSON.stringify(q[f]) !== JSON.stringify((o || {})[f])) { ch = true; up[path + "/posts/" + k + "/" + f] = q[f] === undefined ? null : q[f]; } });
       if (ch) up[path + "/posts/" + k + "/u"] = serverTimestamp();
     });
+    if (body.img !== undefined) up[path + "/img/photo"] = body.img || null;   // รูปหน้าแรก เก็บแยกจากโพสต์
     up[path + "/n"] = n; up[path + "/p"] = raw.n || "-";
     up["tx/" + BID + "/" + n] = PIN;
-    try { await timeout(update(ref(db), up), 60000); posts = after; return true; }
+    try { await timeout(update(ref(db), up), 60000); posts = after; if (body.img !== undefined) PHOTO = body.img || ""; return true; }
     catch (e) { if (!isDenied(e)) throw e; }
   }
   throw new Error("denied");
@@ -133,13 +137,29 @@ const DEF = {
        { cat: "clip", t: "เขมจิราต้องรอด", s: "ตัวอย่างและคลิปจากซีรีส์", q: "เขมจิราต้องรอด Khemjira" }],
   ev: [{ date: "2026-11", t: "Ralph Lauren Holiday Gathering", p: "สิงคโปร์", d: "ร่วมงานในลุค Ralph Lauren" }]
 };
-const BIO = [["th", "ชื่อไทย"], ["en", "ชื่ออังกฤษ"], ["tag", "ป้ายใต้ชื่อ"], ["photo", "ลิงก์รูป (ไม่ใส่ = ใช้ไฟล์ namping.jpg บน GitHub)"], ["bio", "ประวัติ (เว้นบรรทัดว่าง = ขึ้นย่อหน้าใหม่)", "area"], ["birth", "วันเกิด"], ["home", "บ้านเกิด"], ["height", "ส่วนสูง"], ["agency", "สังกัด"], ["ig", "Instagram (ไม่ต้องใส่ @)"], ["x", "X (ไม่ต้องใส่ @)"], ["tt", "TikTok (ไม่ต้องใส่ @)"]];
+const BIO = [["th", "ชื่อไทย"], ["en", "ชื่ออังกฤษ"], ["tag", "ป้ายใต้ชื่อ"], ["bio", "ประวัติ (เว้นบรรทัดว่าง = ขึ้นย่อหน้าใหม่)", "area"], ["birth", "วันเกิด"], ["home", "บ้านเกิด"], ["height", "ส่วนสูง"], ["agency", "สังกัด"], ["ig", "Instagram (ไม่ต้องใส่ @)"], ["x", "X (ไม่ต้องใส่ @)"], ["tt", "TikTok (ไม่ต้องใส่ @)"]];
 const SECS = [
   { k: "work", title: "1 · ผลงาน", add: "เพิ่มผลงาน", fields: [["y", "ปี (ค.ศ.) เช่น 2025", "num"], ["t", "ชื่อเรื่อง"], ["r", "บท / หน้าที่ (ไม่ใส่ก็ได้)"], ["type", "ประเภท", "sel", [["series", "ซีรีส์"], ["movie", "ภาพยนตร์"], ["show", "รายการ"], ["mv", "MV"]]], ["d", "รายละเอียดสั้น ๆ (ไม่ใส่ก็ได้)"], ["main", "งานเด่น", "chk"]], line: p => (p.y || "") + " · " + (p.t || "") },
   { k: "pres", title: "2 · Presenter", add: "เพิ่มแบรนด์", fields: [["name", "ชื่อแบรนด์"], ["note", "ปี / สินค้า (ไม่ใส่ก็ได้)"], ["url", "ลิงก์โพสต์ประกาศ (ไม่ใส่ก็ได้)"]], line: p => (p.name || "") + (p.note ? " · " + p.note : "") },
   { k: "yt", title: "3 · YouTube", add: "เพิ่มคลิป", fields: [["cat", "หมวด", "sel", [["clip", "คลิป / สัมภาษณ์"], ["song", "เพลง"]]], ["t", "ชื่อคลิป"], ["s", "คำอธิบายสั้น ๆ (ไม่ใส่ก็ได้)"], ["link", "ลิงก์ YouTube (วางลิงก์คลิปได้เลย)"]], line: p => (p.cat === "song" ? "เพลง" : "คลิป") + " · " + (p.t || "") },
   { k: "ev", title: "4 · งานที่เคยร่วมงาน", add: "เพิ่มงาน", fields: [["date", "เดือน / ปี", "month"], ["t", "ชื่องาน"], ["p", "สถานที่ (ไม่ใส่ก็ได้)"], ["d", "รายละเอียดสั้น ๆ (ไม่ใส่ก็ได้)"]], line: p => (p.date || "") + " · " + (p.t || "") }
 ];
+// ย่อรูปให้กว้างไม่เกิน 600px แล้วแปลงเป็น JPEG (ไฟล์เล็ก โหลดเร็ว)
+function shrink(file) {
+  return new Promise((ok, no) => {
+    const u = URL.createObjectURL(file), im = new Image();
+    im.onload = () => {
+      const W = 600, sc = Math.min(1, W / im.naturalWidth), c = document.createElement("canvas");
+      c.width = Math.round(im.naturalWidth * sc); c.height = Math.round(im.naturalHeight * sc);
+      c.getContext("2d").drawImage(im, 0, 0, c.width, c.height); URL.revokeObjectURL(u);
+      let q = .82, d = c.toDataURL("image/jpeg", q);
+      while (d.length > 140000 && q > .4) { q -= .1; d = c.toDataURL("image/jpeg", q); }
+      ok(d);
+    };
+    im.onerror = () => { URL.revokeObjectURL(u); no(new Error("bad")); };
+    im.src = u;
+  });
+}
 const ytId = s => { s = String(s || "").trim(); const m = s.match(/(?:youtu\.be\/|v=|\/shorts\/|\/embed\/|\/live\/)([\w-]{11})/); return m ? m[1] : /^[\w-]{11}$/.test(s) ? s : ""; };
 
 /* ---------- หน้าจอ ---------- */
@@ -159,6 +179,24 @@ function render() {
   }
   // หน้าแรก
   const bc = el("section", "card"); bc.appendChild(el("h2", null, "หน้าแรก · ประวัติ")); const bin = {};
+  // รูปน้ำปิง: เลือกจากเครื่อง ย่อให้เล็กก่อนบันทึก (ไม่ต้องใช้ลิงก์)
+  bc.appendChild(el("label", null, "รูปน้ำปิง"));
+  const pv = el("div", "pv"), img = el("img"); img.alt = ""; pv.appendChild(img);
+  const none = el("span", "muted", "ยังไม่มีรูป"); pv.appendChild(none);
+  const showPv = () => { img.hidden = !PHOTO; none.hidden = !!PHOTO; if (PHOTO) img.src = PHOTO; };
+  showPv(); bc.appendChild(pv);
+  const fi = el("input"); fi.type = "file"; fi.accept = "image/*"; fi.hidden = true;
+  const pick = el("button", "pri", PHOTO ? "เปลี่ยนรูป" : "เลือกรูปจากเครื่อง"), del = el("button", null, "ลบรูป"); pick.type = del.type = "button"; del.hidden = !PHOTO;
+  const pr = el("div", "row"); pr.append(pick, del, fi); bc.appendChild(pr);
+  pick.onclick = () => fi.click();
+  fi.onchange = async () => {
+    const f = fi.files && fi.files[0]; fi.value = ""; if (!f) return;
+    pick.disabled = true; msg("กำลังย่อรูป…");
+    try { const data = await shrink(f); await write({ op: "noop", img: data }, "บันทึกรูปแล้ว"); }
+    catch (e) { msg("เปิดรูปนี้ไม่ได้ ลองรูปอื่น", true); }
+    pick.disabled = false;
+  };
+  del.onclick = async () => { if (confirm("ลบรูปน้ำปิงออก?")) await write({ op: "noop", img: "" }, "ลบรูปแล้ว"); };
   BIO.forEach(([k, lab, t]) => { const l = el("label", null, lab), i = el(t === "area" ? "textarea" : "input"); if (t === "area") i.rows = 8; i.value = bio ? (bio[k] || "") : (DEF.bio[k] || ""); bc.append(l, i); bin[k] = i; });
   const bs = el("button", "pri", "บันทึกหน้าแรก"); bs.type = "button"; const br = el("div", "row"); br.appendChild(bs); bc.appendChild(br);
   bs.onclick = async () => {
