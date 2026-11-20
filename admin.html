@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>หลังบ้าน · เว็บประวัติน้ำปิง</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--pink:#FF8FB8;--pinkD:#F0609A;--pinkL:#FFE0EC;--blueD:#5FA8DB;--blueL:#E3F3FD;--ink:#6B4458;--muted:#A57A90;--line:#FFD3E4}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Mitr,"Noto Sans Thai",sans-serif;color:var(--ink);background:linear-gradient(180deg,#FFEAF2,#FFF6FA 50%,#EEF7FE) fixed;font-size:15px}
+  main{max-width:600px;margin:0 auto;padding:16px 14px 80px}
+  h1{margin:6px 0 2px;font-size:24px;color:var(--pinkD)}
+  .sub{margin:0 0 14px;color:var(--muted);font-size:13px}
+  .card{background:#fff;border-radius:22px;padding:16px;margin-bottom:16px;box-shadow:0 5px 0 var(--line)}
+  .card h2{margin:0 0 10px;font-size:18px;color:var(--pinkD)}
+  label{display:block;font-size:13px;font-weight:500;margin:10px 0 4px}
+  input,select,textarea{display:block;width:100%;font:inherit;font-size:16px;padding:10px 12px;border-radius:14px;border:2px solid var(--line);background:#FFFAFC;color:var(--ink)}
+  textarea{resize:vertical;line-height:1.6}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink)}
+  .chk{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:14px;cursor:pointer}
+  .chk input{width:22px;height:22px;margin:0;accent-color:var(--pinkD)}
+  .row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  button{font:inherit;font-weight:500;font-size:15px;border:0;border-radius:999px;padding:10px 18px;cursor:pointer;background:var(--pinkL);color:var(--pinkD)}
+  button.pri{background:var(--pink);color:#fff;box-shadow:0 3px 0 var(--pinkD)}
+  button:disabled{opacity:.5}
+  .item{display:flex;align-items:center;gap:8px;border-top:1.5px dashed var(--line);padding-top:10px;margin-top:10px}
+  .item span{flex:1;min-width:0;font-size:14px;overflow-wrap:anywhere}
+  .item button{padding:7px 14px;font-size:14px}
+  .muted{color:var(--muted);font-size:13px}
+  #msg{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);max-width:92vw;padding:10px 18px;border-radius:999px;background:var(--ink);color:#fff;font-size:14px;opacity:0;transition:.2s;pointer-events:none;z-index:9}
+  #msg.on{opacity:1} #msg.err{background:#C2185B}
+  .lock{display:flex;gap:8px}.lock input{flex:1}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main>
+  <h1>หลังบ้าน · เว็บประวัติ</h1>
+  <p class="sub">แก้แล้วกดบันทึก เว็บ moo-bunny.github.io จะเปลี่ยนตามทันที</p>
+
+  <section class="card" id="lockCard">
+    <h2>ใส่รหัสแอดมิน</h2>
+    <p class="muted">ใช้รหัสเดียวกับหลังบ้านหน้าสื่อ (รหัสที่ใช้เข้าโหมดแก้ไข)</p>
+    <div class="lock"><input id="pin" type="password" autocomplete="current-password" placeholder="รหัสแอดมิน"><button class="pri" id="pinBtn" type="button">เข้า</button></div>
+  </section>
+
+  <div id="app" hidden></div>
+</main>
+<div id="msg" role="status"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, get, update, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const BID = "3ese3gakg6qm";
+const db = getDatabase(initializeApp({ apiKey: "AIzaSyDBGoDjZqFAuefEjWdsNeUQkwZB4CzH4tI", authDomain: "nooping-266c4.firebaseapp.com", databaseURL: "https://nooping-266c4-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "nooping-266c4", storageBucket: "nooping-266c4.firebasestorage.app", messagingSenderId: "871451273436", appId: "1:871451273436:web:6d5e8a1cf36e46b6882c19" }));
+const PKEY = "nsite-pin:" + BID;
+let PIN = "", posts = [];
+
+const $ = id => document.getElementById(id);
+const el = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; };
+const rid = n => Array.from(crypto.getRandomValues(new Uint8Array(n)), x => "abcdefghijklmnopqrstuvwxyz0123456789"[x % 36]).join("");
+let mt; const msg = (t, err) => { const m = $("msg"); m.textContent = t; m.className = "on" + (err ? " err" : ""); clearTimeout(mt); mt = setTimeout(() => m.className = "", 2600); };
+const timeout = (p, ms) => Promise.race([p, new Promise((_, no) => setTimeout(() => no(new Error("timeout")), ms))]);
+const isDenied = e => /permission.?denied/i.test(String(e && (e.code || e.message)));
+
+/* ---------- อ่าน / เขียนบอร์ด (วิธีเดียวกับหลังบ้านหลัก: ส่งเฉพาะโพสต์ที่เปลี่ยน + รหัสยืนยัน) ---------- */
+async function load() {
+  const snap = await timeout(get(ref(db, "boards/" + BID)), 30000);
+  const raw = snap.val() || {}, rp = raw.posts || {};
+  posts = (Array.isArray(rp) ? rp : Object.values(rp)).filter(p => p && p.id);
+}
+function apply(list, b) {
+  if (b.op === "addMany") b.posts.forEach(x => { if (!list.some(y => y.id === x.id)) list.push(x); });
+  else if (b.op === "add") { if (!list.some(x => x.id === b.post.id)) list.push(b.post); }
+  else if (b.op === "patch") { const p = list.find(x => x.id === b.id); if (!p) throw new Error("not_found"); Object.assign(p, b.fields); }
+  else if (b.op === "delete") return list.filter(x => x.id !== b.id);
+  return list;
+}
+async function commit(body) {
+  const path = "boards/" + BID, clean = x => JSON.parse(JSON.stringify(x));
+  for (let i = 0; i < 3; i++) {
+    const snap = await timeout(get(ref(db, path)), 30000);
+    if (!snap.exists()) throw new Error("not_found");
+    const raw = snap.val() || {}, rp = raw.posts || {};
+    const entries = (Array.isArray(rp) ? rp.map((p, k) => [String(k), p]) : Object.entries(rp)).filter(([, p]) => p != null);
+    const keyById = new Map(entries.filter(([, p]) => p && p.id).map(([k, p]) => [String(p.id), k]));
+    const before = new Map(entries.filter(([, p]) => p && p.id).map(([, p]) => [String(p.id), clean(p)]));
+    let nextKey = entries.reduce((m, [k]) => /^\d+$/.test(k) ? Math.max(m, Number(k) + 1) : m, 0);
+    const after = apply(entries.map(([, p]) => clean(p)), body);
+    const afterById = new Map(after.filter(p => p && p.id).map(p => [String(p.id), p]));
+    const n = rid(10), up = {};
+    keyById.forEach((k, id) => { if (!afterById.has(id)) { up[path + "/posts/" + k] = null; up[path + "/del/" + id.replace(/[.#$\[\]\/]/g, "_")] = { id, t: serverTimestamp() }; } });
+    after.forEach(q => {
+      const id = String(q.id), k = keyById.get(id), o = before.get(id);
+      if (k == null) { const nq = clean(q); nq.u = serverTimestamp(); up[path + "/posts/" + (nextKey++)] = nq; return; }
+      let ch = false;
+      new Set(Object.keys(q).concat(Object.keys(o || {}))).forEach(f => { if (f === "u") return; if (JSON.stringify(q[f]) !== JSON.stringify((o || {})[f])) { ch = true; up[path + "/posts/" + k + "/" + f] = q[f] === undefined ? null : q[f]; } });
+      if (ch) up[path + "/posts/" + k + "/u"] = serverTimestamp();
+    });
+    up[path + "/n"] = n; up[path + "/p"] = raw.n || "-";
+    up["tx/" + BID + "/" + n] = PIN;
+    try { await timeout(update(ref(db), up), 60000); posts = after; return true; }
+    catch (e) { if (!isDenied(e)) throw e; }
+  }
+  throw new Error("denied");
+}
+async function write(body, ok) {
+  msg("กำลังบันทึก…");
+  try { await commit(body); render(); msg(ok); return true; }
+  catch (e) {
+    if (e.message === "denied") { msg("รหัสแอดมินไม่ถูกต้อง", true); lock(); return false; }
+    msg("บันทึกไม่สำเร็จ เช็กอินเทอร์เน็ตแล้วลองใหม่", true); return false;
+  }
+}
+
+/* ---------- ข้อมูลตั้งต้น ---------- */
+const DEF = {
+  bio: { th: "น้ำปิง นภัสกร ปิงเมือง", en: "Namping Napatsakorn Pingmuang", tag: "นักแสดง · ศิลปิน DOMUNDI", photo: "", bio: "น้ำปิง นภัสกร เกิดวันที่ 17 กุมภาพันธ์ 2544 ที่จังหวัดแม่ฮ่องสอน สมัยมัธยมเคยเป็นประธานนักเรียนโรงเรียนแม่สะเรียงบริพัตรศึกษา\n\nจากนั้นเข้ามาเรียนที่คณะนิเทศศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย สาขาวารสารสนเทศและสื่อใหม่ และเรียนจบในปี 2566\n\nเริ่มเป็นที่รู้จักจากการเป็นพระเอก MV เพลง Melt (โต๊ะริม) ของนนท์ ธนนท์ เมื่อปี 2565 ก่อนเข้าสังกัด DOMUNDI และแจ้งเกิดเต็มตัวจากบทเขมจิรา ในซีรีส์ เขมจิราต้องรอด (2568) คู่กับเก่ง หฤษฎ์", birth: "17 ก.พ. 2544", home: "แม่ฮ่องสอน", height: "180 ซม.", agency: "DOMUNDI", ig: "nampingster", x: "nampingnapat", tt: "nampingster" },
+  work: [
+    { y: 2025, t: "เขมจิราต้องรอด (Khemjira)", r: "บท เขมจิรา", type: "series", main: true, d: "ซีรีส์ Romantic Horror 12 ตอน คู่กับ เก่ง หฤษฎ์" },
+    { y: 2025, t: "Me and Who", r: "บท Karn", type: "series" }, { y: 2025, t: "Zomvivor", type: "series" },
+    { y: 2024, t: "Sawatdee Khrap T-Boys!!", r: "สมาชิกประจำรายการ", type: "show", d: "รายการโทรทัศน์ญี่ปุ่น 10 ตอน" },
+    { y: 2023, t: "Night Dream (คืนฝันของฉันและเธอ)", r: "บท Nat", type: "series", d: "บทสมทบ" },
+    { y: 2023, t: "After Sundown", r: "บท Phutson", type: "movie", d: "ภาพยนตร์เรื่องแรก บทสมทบ" },
+    { y: 2023, t: "DMD Friendship The Reality", r: "สมาชิกประจำรายการ", type: "show", d: "เรียลลิตี้ 6 ตอน" },
+    { y: 2022, t: "Melt (โต๊ะริม) · นนท์ ธนนท์", r: "พระเอก MV", type: "mv", main: true, d: "งานแรกในวงการ" }],
+  yt: [{ cat: "song", t: "Melt (โต๊ะริม) · นนท์ ธนนท์", s: "MV ที่น้ำปิงเป็นพระเอก", q: "Melt โต๊ะริม Nont Tanont" },
+       { cat: "clip", t: "เขมจิราต้องรอด", s: "ตัวอย่างและคลิปจากซีรีส์", q: "เขมจิราต้องรอด Khemjira" }],
+  ev: [{ date: "2026-11", t: "Ralph Lauren Holiday Gathering", p: "สิงคโปร์", d: "ร่วมงานในลุค Ralph Lauren" }]
+};
+const BIO = [["th", "ชื่อไทย"], ["en", "ชื่ออังกฤษ"], ["tag", "ป้ายใต้ชื่อ"], ["photo", "ลิงก์รูป (ไม่ใส่ = ใช้ไฟล์ namping.jpg บน GitHub)"], ["bio", "ประวัติ (เว้นบรรทัดว่าง = ขึ้นย่อหน้าใหม่)", "area"], ["birth", "วันเกิด"], ["home", "บ้านเกิด"], ["height", "ส่วนสูง"], ["agency", "สังกัด"], ["ig", "Instagram (ไม่ต้องใส่ @)"], ["x", "X (ไม่ต้องใส่ @)"], ["tt", "TikTok (ไม่ต้องใส่ @)"]];
+const SECS = [
+  { k: "work", title: "1 · ผลงาน", add: "เพิ่มผลงาน", fields: [["y", "ปี (ค.ศ.) เช่น 2025", "num"], ["t", "ชื่อเรื่อง"], ["r", "บท / หน้าที่ (ไม่ใส่ก็ได้)"], ["type", "ประเภท", "sel", [["series", "ซีรีส์"], ["movie", "ภาพยนตร์"], ["show", "รายการ"], ["mv", "MV"]]], ["d", "รายละเอียดสั้น ๆ (ไม่ใส่ก็ได้)"], ["main", "งานเด่น", "chk"]], line: p => (p.y || "") + " · " + (p.t || "") },
+  { k: "pres", title: "2 · Presenter", add: "เพิ่มแบรนด์", fields: [["name", "ชื่อแบรนด์"], ["note", "ปี / สินค้า (ไม่ใส่ก็ได้)"], ["url", "ลิงก์โพสต์ประกาศ (ไม่ใส่ก็ได้)"]], line: p => (p.name || "") + (p.note ? " · " + p.note : "") },
+  { k: "yt", title: "3 · YouTube", add: "เพิ่มคลิป", fields: [["cat", "หมวด", "sel", [["clip", "คลิป / สัมภาษณ์"], ["song", "เพลง"]]], ["t", "ชื่อคลิป"], ["s", "คำอธิบายสั้น ๆ (ไม่ใส่ก็ได้)"], ["link", "ลิงก์ YouTube (วางลิงก์คลิปได้เลย)"]], line: p => (p.cat === "song" ? "เพลง" : "คลิป") + " · " + (p.t || "") },
+  { k: "ev", title: "4 · งานที่เคยร่วมงาน", add: "เพิ่มงาน", fields: [["date", "เดือน / ปี", "month"], ["t", "ชื่องาน"], ["p", "สถานที่ (ไม่ใส่ก็ได้)"], ["d", "รายละเอียดสั้น ๆ (ไม่ใส่ก็ได้)"]], line: p => (p.date || "") + " · " + (p.t || "") }
+];
+const ytId = s => { s = String(s || "").trim(); const m = s.match(/(?:youtu\.be\/|v=|\/shorts\/|\/embed\/|\/live\/)([\w-]{11})/); return m ? m[1] : /^[\w-]{11}$/.test(s) ? s : ""; };
+
+/* ---------- หน้าจอ ---------- */
+function render() {
+  const app = $("app"), items = posts.filter(p => /^n/.test(p.id) && p.sec), bio = items.find(p => p.id === "nbio");
+  app.textContent = "";
+  if (!items.length) {
+    const c = el("section", "card"); c.appendChild(el("h2", null, "เริ่มต้น"));
+    c.appendChild(el("p", "muted", "ยังไม่มีข้อมูลในหลังบ้าน กดปุ่มนี้ครั้งเดียว เพื่อใส่ข้อมูลที่เห็นบนเว็บตอนนี้เข้าไป แล้วค่อยแก้ทีละอัน"));
+    const b = el("button", "pri", "ใส่ข้อมูลตั้งต้น"); b.type = "button";
+    b.onclick = async () => {
+      const now = Date.now(), ps = [Object.assign({ id: "nbio", sec: "bio", created: now }, DEF.bio)];
+      ["work", "yt", "ev"].forEach(k => DEF[k].forEach((x, i) => ps.push(Object.assign({ id: "n" + k + rid(8), sec: k, created: now - i }, x))));
+      b.disabled = true; await write({ op: "addMany", posts: ps }, "ใส่ข้อมูลตั้งต้นแล้ว"); b.disabled = false;
+    };
+    c.appendChild(b); app.appendChild(c);
+  }
+  // หน้าแรก
+  const bc = el("section", "card"); bc.appendChild(el("h2", null, "หน้าแรก · ประวัติ")); const bin = {};
+  BIO.forEach(([k, lab, t]) => { const l = el("label", null, lab), i = el(t === "area" ? "textarea" : "input"); if (t === "area") i.rows = 8; i.value = bio ? (bio[k] || "") : (DEF.bio[k] || ""); bc.append(l, i); bin[k] = i; });
+  const bs = el("button", "pri", "บันทึกหน้าแรก"); bs.type = "button"; const br = el("div", "row"); br.appendChild(bs); bc.appendChild(br);
+  bs.onclick = async () => {
+    const f = {}; BIO.forEach(([k]) => f[k] = bin[k].value.trim().replace(/^@/, ""));
+    bs.disabled = true;
+    if (bio) await write({ op: "patch", id: "nbio", fields: f }, "บันทึกหน้าแรกแล้ว");
+    else await write({ op: "add", post: Object.assign({ id: "nbio", sec: "bio", created: Date.now() }, f) }, "บันทึกหน้าแรกแล้ว");
+    bs.disabled = false;
+  };
+  app.appendChild(bc);
+  // 4 หมวด
+  SECS.forEach(S => {
+    const c = el("section", "card"); c.appendChild(el("h2", null, S.title));
+    const rows = items.filter(p => p.sec === S.k).sort((a, b) => S.k === "work" ? (b.y || 0) - (a.y || 0) || (b.created || 0) - (a.created || 0) : S.k === "ev" ? String(b.date || "").localeCompare(String(a.date || "")) : (b.created || 0) - (a.created || 0));
+    let editId = null; const inp = {};
+    S.fields.forEach(([k, lab, t, opts]) => {
+      let i;
+      if (t === "chk") { const l = el("label", "chk"); i = el("input"); i.type = "checkbox"; l.append(i, document.createTextNode(lab)); c.appendChild(l); }
+      else {
+        c.appendChild(el("label", null, lab));
+        if (t === "sel") { i = el("select"); opts.forEach(([v, n]) => { const o = el("option", null, n); o.value = v; i.appendChild(o); }); }
+        else { i = el("input"); if (t === "num") i.inputMode = "numeric"; if (t === "month") i.type = "month"; }
+        c.appendChild(i);
+      }
+      inp[k] = i;
+    });
+    const sv = el("button", "pri", "＋ " + S.add), cancel = el("button", null, "ยกเลิกแก้ไข"); sv.type = cancel.type = "button"; cancel.hidden = true;
+    const r = el("div", "row"); r.append(sv, cancel); c.appendChild(r);
+    const reset = () => { editId = null; Object.values(inp).forEach(i => { if (i.type === "checkbox") i.checked = false; else if (i.tagName === "SELECT") i.selectedIndex = 0; else i.value = ""; }); sv.textContent = "＋ " + S.add; cancel.hidden = true; };
+    cancel.onclick = reset;
+    sv.onclick = async () => {
+      const f = {}; S.fields.forEach(([k, , t]) => { const i = inp[k]; f[k] = t === "chk" ? i.checked : t === "num" ? (parseInt(i.value, 10) || 0) : i.value.trim(); });
+      if (!(S.k === "pres" ? f.name : f.t)) return msg("ใส่ชื่อก่อนนะ", true);
+      if (S.k === "yt") { f.yid = ytId(f.link); if (!f.yid && f.link) return msg("ลิงก์ YouTube ไม่ถูกต้อง", true); f.q = f.yid ? "" : f.t; }
+      sv.disabled = true;
+      const ok = editId ? await write({ op: "patch", id: editId, fields: f }, "แก้ไขแล้ว") : await write({ op: "add", post: Object.assign({ id: "n" + S.k + rid(8), sec: S.k, created: Date.now() }, f) }, "เพิ่มแล้ว");
+      sv.disabled = false; if (ok) reset();
+    };
+    if (!rows.length) c.appendChild(el("p", "muted", "ยังไม่มีข้อมูล"));
+    rows.forEach(p => {
+      const it = el("div", "item"); it.appendChild(el("span", null, S.line(p)));
+      const e = el("button", null, "แก้"), d = el("button", null, "ลบ"); e.type = d.type = "button";
+      e.onclick = () => { editId = p.id; S.fields.forEach(([k, , t]) => { const i = inp[k]; if (t === "chk") i.checked = !!p[k]; else i.value = p[k] == null ? "" : p[k]; }); if (S.k === "yt" && !p.link && p.yid) inp.link.value = "https://youtu.be/" + p.yid; sv.textContent = "บันทึกการแก้ไข"; cancel.hidden = false; c.scrollIntoView({ behavior: "smooth" }); };
+      d.onclick = async () => { if (confirm("ลบ \"" + S.line(p) + "\" ?")) await write({ op: "delete", id: p.id }, "ลบแล้ว"); };
+      it.append(e, d); c.appendChild(it);
+    });
+    app.appendChild(c);
+  });
+}
+function lock() { PIN = ""; try { localStorage.removeItem(PKEY); } catch (e) {} $("app").hidden = true; $("lockCard").hidden = false; }
+async function unlock(p) {
+  PIN = p; $("pinBtn").disabled = true; msg("กำลังโหลด…");
+  try { await load(); try { localStorage.setItem(PKEY, p); } catch (e) {} $("lockCard").hidden = true; $("app").hidden = false; render(); msg("พร้อมแก้ไขแล้ว"); }
+  catch (e) { msg("โหลดข้อมูลไม่ได้ เช็กอินเทอร์เน็ต", true); }
+  $("pinBtn").disabled = false;
+}
+$("pinBtn").onclick = () => { const p = $("pin").value.trim(); if (p) unlock(p); };
+$("pin").onkeydown = e => { if (e.key === "Enter") $("pinBtn").click(); };
+try { const p = localStorage.getItem(PKEY); if (p) unlock(p); } catch (e) {}
+</script>
+</body>
+</html>
