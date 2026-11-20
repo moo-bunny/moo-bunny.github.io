@@ -60,7 +60,9 @@ import { getDatabase, ref, get, update, serverTimestamp } from "https://www.gsta
 
 const BID = "3ese3gakg6qm";
 const db = getDatabase(initializeApp({ apiKey: "AIzaSyDBGoDjZqFAuefEjWdsNeUQkwZB4CzH4tI", authDomain: "nooping-266c4.firebaseapp.com", databaseURL: "https://nooping-266c4-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "nooping-266c4", storageBucket: "nooping-266c4.firebasestorage.app", messagingSenderId: "871451273436", appId: "1:871451273436:web:6d5e8a1cf36e46b6882c19" }));
-const PKEY = "nsite-pin:" + BID;
+const PKEY = "nsite-pin2:" + BID;
+// รหัสที่ส่งไป Firebase คือ SHA-256 ของ "yod:" + รหัสที่พิมพ์ (แบบเดียวกับหลังบ้านหลัก)
+async function sha(t) { const h = await crypto.subtle.digest("SHA-256", new TextEncoder().encode("yod:" + t)); return Array.from(new Uint8Array(h)).map(x => x.toString(16).padStart(2, "0")).join(""); }
 let PIN = "", posts = [];
 
 const $ = id => document.getElementById(id);
@@ -247,13 +249,16 @@ function render() {
   });
 }
 function lock() { PIN = ""; try { localStorage.removeItem(PKEY); } catch (e) {} $("app").hidden = true; $("lockCard").hidden = false; }
-async function unlock(p) {
-  PIN = p; $("pinBtn").disabled = true; msg("กำลังโหลด…");
-  try { await load(); try { localStorage.setItem(PKEY, p); } catch (e) {} $("lockCard").hidden = true; $("app").hidden = false; render(); msg("พร้อมแก้ไขแล้ว"); }
-  catch (e) { msg("โหลดข้อมูลไม่ได้ เช็กอินเทอร์เน็ต", true); }
+async function unlock(h) {
+  PIN = h; $("pinBtn").disabled = true; msg("กำลังตรวจรหัส…");
+  try {
+    await commit({ op: "noop" });   // ลองบันทึกเปล่า ๆ เพื่อเช็กว่ารหัสถูก
+    await load(); try { localStorage.setItem(PKEY, h); } catch (e) {}
+    $("lockCard").hidden = true; $("app").hidden = false; $("pin").value = ""; render(); msg("พร้อมแก้ไขแล้ว");
+  } catch (e) { PIN = ""; try { localStorage.removeItem(PKEY); } catch (x) {} msg(e.message === "denied" ? "รหัสแอดมินไม่ถูกต้อง" : "เชื่อมต่อไม่ได้ เช็กอินเทอร์เน็ต", true); }
   $("pinBtn").disabled = false;
 }
-$("pinBtn").onclick = () => { const p = $("pin").value.trim(); if (p) unlock(p); };
+$("pinBtn").onclick = async () => { const p = $("pin").value.trim(); if (p) unlock(await sha(p)); };
 $("pin").onkeydown = e => { if (e.key === "Enter") $("pinBtn").click(); };
 try { const p = localStorage.getItem(PKEY); if (p) unlock(p); } catch (e) {}
 </script>
