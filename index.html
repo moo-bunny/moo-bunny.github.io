@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Namping Napatsakorn · น้ำปิง นภัสกร</title>
+<meta name="description" content="รวมประวัติ ผลงาน Presenter YouTube และงานที่น้ำปิง นภัสกร เคยร่วม">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#F0288C; --pink2:#FF6FB1; --soft:#FFE3EF; --soft2:#FFF3F8;
+    --ink:#7A1F4E; --muted:#B0607F; --line:#F8C6DC; --card:#fff;
+    --r:22px; --shadow:0 6px 22px #F0288C1f;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:Prompt,"Noto Sans Thai",system-ui,sans-serif;color:var(--ink);
+    background:linear-gradient(180deg,#FFD9EA 0,#FFEAF3 260px,#FFF6FA 100%) fixed;min-height:100vh;-webkit-tap-highlight-color:transparent}
+  a{color:inherit}
+  .wrap{max-width:720px;margin:0 auto;padding:0 16px 48px}
+
+  /* แถบบน */
+  .top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;padding:12px 16px;
+    background:#FFE3EFcc;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid #F8C6DC80}
+  .brand{font-weight:700;font-size:20px;color:var(--pink);text-decoration:none;letter-spacing:.2px}
+  .brand small{display:block;font-size:11px;font-weight:500;color:var(--muted);letter-spacing:0;margin-top:-2px}
+  .menu-btn{margin-left:auto;width:44px;height:44px;border-radius:14px;border:2px solid var(--line);background:#fff;
+    display:grid;place-items:center;cursor:pointer;box-shadow:var(--shadow)}
+  .menu-btn i{display:block;width:18px;height:2px;border-radius:2px;background:var(--pink);box-shadow:0 -6px 0 var(--pink),0 6px 0 var(--pink)}
+
+  /* เมนูข้าง */
+  .scrim{position:fixed;inset:0;background:#7A1F4E40;opacity:0;pointer-events:none;transition:.25s;z-index:30}
+  .drawer{position:fixed;top:0;right:0;bottom:0;width:min(300px,82vw);background:#fff;z-index:31;transform:translateX(105%);
+    transition:transform .28s cubic-bezier(.2,.8,.2,1);padding:18px 16px;display:flex;flex-direction:column;gap:6px;
+    border-radius:26px 0 0 26px;box-shadow:-10px 0 30px #F0288C26}
+  body.open .scrim{opacity:1;pointer-events:auto}
+  body.open .drawer{transform:none}
+  .drawer h2{margin:4px 6px 12px;font-size:15px;color:var(--muted);font-weight:600}
+  .drawer a{display:flex;align-items:center;gap:12px;padding:14px 12px;border-radius:16px;text-decoration:none;font-weight:600;font-size:16px}
+  .drawer a .n{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--soft);color:var(--pink);font-size:13px;flex:none}
+  .drawer a.on,.drawer a:hover{background:var(--soft2)}
+  .drawer a.on .n{background:var(--pink);color:#fff}
+  .drawer .x{align-self:flex-end;width:40px;height:40px;border-radius:12px;border:0;background:var(--soft);color:var(--pink);font-size:22px;cursor:pointer}
+
+  /* หน้า */
+  .page{display:none;animation:fade .3s ease}
+  .page.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .ptitle{margin:22px 4px 14px;font-size:26px;font-weight:700}
+  .ptitle small{display:block;font-size:13px;font-weight:500;color:var(--muted);margin-top:2px}
+  .card{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px}
+
+  /* หน้าแรก: ประวัติ */
+  .hero{text-align:center;padding:26px 18px 22px;margin-top:18px}
+  .photo{width:min(220px,62vw);aspect-ratio:4/5;margin:0 auto 16px;border-radius:26px;overflow:hidden;
+    background:linear-gradient(160deg,var(--soft),#FFC9E1);border:4px solid #fff;box-shadow:0 10px 28px #F0288C33;display:grid;place-items:center;position:relative}
+  .photo img{width:100%;height:100%;object-fit:cover;display:block}
+  .photo .ph{font-size:13px;color:var(--muted);padding:12px;line-height:1.5}
+  .hero h1{margin:0;font-size:28px;line-height:1.2;color:var(--pink)}
+  .hero .en{margin:4px 0 0;font-size:14px;color:var(--muted);font-weight:500}
+  .hero .tag{display:inline-block;margin-top:12px;padding:6px 14px;border-radius:999px;background:var(--soft);font-size:13px;font-weight:600}
+  .bio{margin-top:14px;line-height:1.75;font-size:15px}
+  .bio p{margin:0 0 10px}
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+  .fact{background:var(--soft2);border-radius:16px;padding:12px}
+  .fact small{display:block;font-size:12px;color:var(--muted)}
+  .fact b{font-size:15px;font-weight:600}
+  .social{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .social a{flex:1 1 30%;text-align:center;padding:11px 8px;border-radius:14px;background:var(--pink);color:#fff;text-decoration:none;font-weight:600;font-size:14px}
+  .social a small{display:block;font-weight:400;font-size:11px;opacity:.9}
+  .quick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+  .quick a{display:block;padding:16px 14px;border-radius:18px;background:#fff;border:1.5px solid var(--line);text-decoration:none;box-shadow:var(--shadow)}
+  .quick a b{display:block;font-size:16px}
+  .quick a small{color:var(--muted);font-size:12px}
+
+  /* ผลงาน */
+  .seg{display:flex;gap:6px;background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:4px;margin:0 0 14px;overflow-x:auto}
+  .seg button{flex:1;white-space:nowrap;border:0;background:none;font:inherit;font-size:14px;font-weight:600;color:var(--muted);padding:8px 12px;border-radius:999px;cursor:pointer}
+  .seg button.on{background:var(--pink);color:#fff}
+  .tl{position:relative;padding-left:22px}
+  .tl::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:var(--line);border-radius:2px}
+  .work{position:relative;margin-bottom:12px}
+  .work::before{content:"";position:absolute;left:-21px;top:22px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid var(--pink)}
+  .work .card{padding:14px 16px}
+  .work .yr{font-size:12px;font-weight:700;color:var(--pink)}
+  .work h3{margin:2px 0 4px;font-size:17px}
+  .work p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.5}
+  .chip{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--soft);color:var(--ink);margin-right:4px}
+  .chip.main{background:var(--pink);color:#fff}
+
+  /* Presenter / งานที่ร่วม */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .brandc{padding:16px;text-align:center}
+  .logo{width:64px;height:64px;margin:0 auto 10px;border-radius:18px;background:var(--soft);display:grid;place-items:center;font-weight:700;font-size:22px;color:var(--pink)}
+  .brandc h3{margin:0;font-size:15px}
+  .brandc p{margin:4px 0 0;font-size:12px;color:var(--muted)}
+  .ev{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;margin-bottom:10px}
+  .ev .d{flex:none;width:58px;text-align:center;background:var(--soft);border-radius:14px;padding:8px 4px;line-height:1.1}
+  .ev .d b{display:block;font-size:20px;color:var(--pink)}
+  .ev .d small{font-size:11px;color:var(--muted)}
+  .ev h3{margin:0 0 3px;font-size:16px}
+  .ev p{margin:0;font-size:13px;color:var(--muted);line-height:1.5}
+  .empty{text-align:center;color:var(--muted);font-size:14px;padding:22px}
+
+  /* YouTube */
+  .yt{display:block;text-decoration:none;overflow:hidden;padding:0;margin-bottom:12px}
+  .thumb{aspect-ratio:16/9;background:linear-gradient(135deg,#FFC9E1,var(--soft));position:relative;display:grid;place-items:center}
+  .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .play{position:relative;width:58px;height:40px;border-radius:12px;background:var(--pink);box-shadow:0 4px 14px #0003}
+  .play::after{content:"";position:absolute;left:23px;top:12px;border-left:15px solid #fff;border-top:8px solid transparent;border-bottom:8px solid transparent}
+  .yt .meta{padding:12px 16px}
+  .yt h3{margin:0;font-size:16px}
+  .yt p{margin:3px 0 0;font-size:12.5px;color:var(--muted)}
+
+  .note{margin-top:16px;font-size:12px;color:var(--muted);text-align:center;line-height:1.6}
+  footer{text-align:center;font-size:12px;color:var(--muted);padding:24px 16px 32px}
+  @media(min-width:640px){.facts{grid-template-columns:repeat(4,1fr)}.hero{padding:32px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#home">Namping<small>น้ำปิง นภัสกร</small></a>
+  <button class="menu-btn" id="menuBtn" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="drawer"><i></i></button>
+</header>
+<div class="scrim" id="scrim"></div>
+<nav class="drawer" id="drawer" aria-label="เมนู">
+  <button class="x" id="closeBtn" aria-label="ปิดเมนู">×</button>
+  <h2>เมนู</h2>
+  <a href="#home"><span class="n">○</span>หน้าแรก · ประวัติ</a>
+  <a href="#works"><span class="n">1</span>ผลงาน</a>
+  <a href="#presenter"><span class="n">2</span>Presenter</a>
+  <a href="#youtube"><span class="n">3</span>YouTube</a>
+  <a href="#events"><span class="n">4</span>งานที่เคยร่วมงาน</a>
+</nav>
+
+<main class="wrap">
+  <!-- หน้าแรก: ประวัติน้ำปิง -->
+  <section class="page" id="p-home">
+    <div class="card hero">
+      <div class="photo" id="photo"><div class="ph">ใส่รูปน้ำปิง<br>ในหลังบ้าน หรือไฟล์ namping.jpg</div></div>
+      <h1 id="bTh"></h1>
+      <p class="en" id="bEn"></p>
+      <span class="tag" id="bTag"></span>
+    </div>
+
+    <h2 class="ptitle">ประวัติน้ำปิง</h2>
+    <div class="card">
+      <div class="bio" id="bBio"></div>
+      <div class="facts" id="bFacts"></div>
+      <div class="social" id="bSocial"></div>
+    </div>
+
+    <div class="quick">
+      <a href="#works"><b>ผลงาน</b><small>ซีรีส์ หนัง รายการ</small></a>
+      <a href="#presenter"><b>Presenter</b><small>แบรนด์ที่น้ำปิงเป็นพรีเซนเตอร์</small></a>
+      <a href="#youtube"><b>YouTube</b><small>คลิปและเพลง</small></a>
+      <a href="#events"><b>งานที่เคยร่วม</b><small>อีเวนต์และงานแบรนด์</small></a>
+    </div>
+  </section>
+
+  <!-- 1 ผลงาน -->
+  <section class="page" id="p-works">
+    <h2 class="ptitle">ผลงาน<small>เรียงจากล่าสุด</small></h2>
+    <div class="seg" id="workSeg"></div>
+    <div class="tl" id="workList"></div>
+  </section>
+
+  <!-- 2 Presenter -->
+  <section class="page" id="p-presenter">
+    <h2 class="ptitle">Presenter<small>แบรนด์ที่น้ำปิงเป็นพรีเซนเตอร์</small></h2>
+    <div class="grid" id="presList"></div>
+  </section>
+
+  <!-- 3 YouTube -->
+  <section class="page" id="p-youtube">
+    <h2 class="ptitle">YouTube<small>คลิป สัมภาษณ์ และเพลง</small></h2>
+    <div class="seg" id="ytSeg"></div>
+    <div id="ytList"></div>
+  </section>
+
+  <!-- 4 งานที่เคยร่วมงาน -->
+  <section class="page" id="p-events">
+    <h2 class="ptitle">งานที่เคยร่วมงาน<small>อีเวนต์ งานแบรนด์ และงานประกาศรางวัล</small></h2>
+    <div id="evList"></div>
+  </section>
+</main>
+<footer>เว็บไซต์โดยแฟนคลับ · ไม่ใช่เว็บทางการของศิลปินหรือต้นสังกัด</footer>
+
+<script>
+/* ข้อมูลจริงมาจากหลังบ้าน (namping-admin.html แท็บ "เว็บประวัติ") ผ่าน Firebase
+   ข้อมูลข้างล่างนี้เป็นค่าตั้งต้น ใช้ตอนหลังบ้านยังไม่มีข้อมูล หรือโหลดไม่ได้ */
+const DB = "https://nooping-266c4-default-rtdb.asia-southeast1.firebasedatabase.app", BOARD = "3ese3gakg6qm";
+let BIO = { th: "น้ำปิง นภัสกร ปิงเมือง", en: "Namping Napatsakorn Pingmuang", tag: "นักแสดง · ศิลปิน DOMUNDI", photo: "",
+  bio: "น้ำปิง นภัสกร เกิดวันที่ 17 กุมภาพันธ์ 2544 ที่จังหวัดแม่ฮ่องสอน สมัยมัธยมเคยเป็นประธานนักเรียนโรงเรียนแม่สะเรียงบริพัตรศึกษา\n\nจากนั้นเข้ามาเรียนที่คณะนิเทศศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย สาขาวารสารสนเทศและสื่อใหม่ และเรียนจบในปี 2566\n\nเริ่มเป็นที่รู้จักจากการเป็นพระเอก MV เพลง Melt (โต๊ะริม) ของนนท์ ธนนท์ เมื่อปี 2565 ก่อนเข้าสังกัด DOMUNDI และแจ้งเกิดเต็มตัวจากบทเขมจิรา ในซีรีส์ เขมจิราต้องรอด (2568) คู่กับเก่ง หฤษฎ์",
+  birth: "17 ก.พ. 2544", home: "แม่ฮ่องสอน", height: "180 ซม.", agency: "DOMUNDI", ig: "nampingster", x: "nampingnapat", tt: "nampingster" };
+/* ================= ค่าตั้งต้น =================
+   ผลงาน  type: "series" | "movie" | "show" | "mv"   main: true = บทนำ
+   YouTube: ใส่ id ของคลิป (ตัวหลัง v= ในลิงก์) จะขึ้นรูปปกให้เอง  cat: "clip" | "song"
+   ถ้ายังไม่มี id ใส่ q แทน = ลิงก์ไปหน้าค้นหาใน YouTube
+================================================================ */
+let WORKS = [
+  { y: 2025, t: "เขมจิราต้องรอด (Khemjira)", r: "บท เขมจิรา", type: "series", main: true, d: "ซีรีส์ Romantic Horror 12 ตอน คู่กับ เก่ง หฤษฎ์" },
+  { y: 2025, t: "Me and Who", r: "บท Karn", type: "series", d: "" },
+  { y: 2025, t: "Zomvivor", r: "", type: "series", d: "" },
+  { y: 2024, t: "Sawatdee Khrap T-Boys!!", r: "สมาชิกประจำรายการ", type: "show", d: "รายการโทรทัศน์ญี่ปุ่น 10 ตอน" },
+  { y: 2023, t: "Night Dream (คืนฝันของฉันและเธอ)", r: "บท Nat", type: "series", d: "บทสมทบ" },
+  { y: 2023, t: "After Sundown", r: "บท Phutson", type: "movie", d: "ภาพยนตร์เรื่องแรก บทสมทบ" },
+  { y: 2023, t: "DMD Friendship The Reality", r: "สมาชิกประจำรายการ", type: "show", d: "เรียลลิตี้ 6 ตอน" },
+  { y: 2022, t: "Melt (โต๊ะริม) · นนท์ ธนนท์", r: "พระเอก MV", type: "mv", main: true, d: "งานแรกในวงการ" }
+];
+let PRESENTERS = [
+  // ตัวอย่าง: { name: "ชื่อแบรนด์", note: "ปี / สินค้า", url: "ลิงก์โพสต์ประกาศ" }
+];
+let YT = [
+  { cat: "song", t: "Melt (โต๊ะริม) · นนท์ ธนนท์", s: "MV ที่น้ำปิงเป็นพระเอก", q: "Melt โต๊ะริม Nont Tanont" },
+  { cat: "clip", t: "เขมจิราต้องรอด", s: "ตัวอย่างและคลิปจากซีรีส์", q: "เขมจิราต้องรอด Khemjira" },
+  { cat: "clip", t: "สัมภาษณ์ น้ำปิง นภัสกร", s: "คลิปสัมภาษณ์ทั้งหมด", q: "น้ำปิง นภัสกร สัมภาษณ์" },
+  { cat: "song", t: "เพลงที่น้ำปิงร้อง", s: "คลิปร้องเพลง / โชว์ในคอนเสิร์ต", q: "น้ำปิง นภัสกร ร้องเพลง" }
+];
+let EVENTS = [
+  { date: "2026-11", t: "Ralph Lauren Holiday Gathering", p: "สิงคโปร์", d: "ร่วมงานในลุค Ralph Lauren" }
+  // ตัวอย่าง: { date: "2026-05", t: "ชื่องาน", p: "สถานที่", d: "รายละเอียดสั้น ๆ" }
+];
+/* ============================================================== */
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const TH_MON = ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."];
+const TYPE_TH = { series: "ซีรีส์", movie: "ภาพยนตร์", show: "รายการ", mv: "MV" };
+
+function seg(box, opts, cur, on) {
+  box.innerHTML = opts.map(([k, l]) => '<button data-k="' + k + '"' + (k === cur ? ' class="on"' : "") + ">" + l + "</button>").join("");
+  box.onclick = e => { const b = e.target.closest("button"); if (!b) return; [...box.children].forEach(x => x.classList.toggle("on", x === b)); on(b.dataset.k); };
+}
+function renderBio() {
+  const B = BIO;
+  $("#bTh").textContent = B.th || ""; $("#bEn").textContent = B.en || ""; $("#bTag").textContent = B.tag || ""; $("#bTag").hidden = !B.tag;
+  const ph = $("#photo"), old = ph.querySelector("img"); if (old) old.remove();
+  const img = new Image(); img.alt = B.th || "น้ำปิง"; img.src = B.photo || "namping.jpg"; img.onerror = () => img.remove(); ph.prepend(img);
+  $("#bBio").innerHTML = String(B.bio || "").split(/\n\s*\n/).filter(x => x.trim()).map(x => "<p>" + esc(x.trim()).replace(/\n/g, "<br>") + "</p>").join("");
+  $("#bFacts").innerHTML = [["วันเกิด", B.birth], ["บ้านเกิด", B.home], ["ส่วนสูง", B.height], ["สังกัด", B.agency]].filter(x => x[1]).map(([k, v]) => '<div class="fact"><small>' + k + "</small><b>" + esc(v) + "</b></div>").join("");
+  const h = v => encodeURIComponent(String(v || "").replace(/^@/, ""));
+  $("#bSocial").innerHTML = [["Instagram", B.ig, "https://www.instagram.com/" + h(B.ig) + "/"], ["X", B.x, "https://x.com/" + h(B.x)], ["TikTok", B.tt, "https://www.tiktok.com/@" + h(B.tt)]].filter(x => x[1]).map(([n, v, u]) => '<a href="' + u + '" target="_blank" rel="noopener">' + n + "<small>@" + esc(String(v).replace(/^@/, "")) + "</small></a>").join("");
+}
+function renderWorks(f) {
+  const list = WORKS.filter(w => f === "all" || w.type === f).sort((a, b) => b.y - a.y);
+  $("#workList").innerHTML = list.length ? list.map(w =>
+    '<div class="work"><div class="card"><div class="yr">' + (w.y + 543) + " · " + w.y + "</div><h3>" + esc(w.t) + "</h3>" +
+    '<span class="chip' + (w.main ? " main" : "") + '">' + TYPE_TH[w.type] + "</span>" + (w.r ? '<span class="chip">' + esc(w.r) + "</span>" : "") +
+    (w.d ? '<p style="margin-top:6px">' + esc(w.d) + "</p>" : "") + "</div></div>").join("") : '<div class="card empty">ยังไม่มีผลงานในหมวดนี้</div>';
+}
+function renderPres() {
+  $("#presList").innerHTML = PRESENTERS.length ? PRESENTERS.map(p =>
+    '<a class="card brandc" style="text-decoration:none" ' + (p.url ? 'href="' + esc(p.url) + '" target="_blank" rel="noopener"' : "") + '><div class="logo">' + esc(p.name.slice(0, 2).toUpperCase()) + "</div><h3>" + esc(p.name) + "</h3>" + (p.note ? "<p>" + esc(p.note) + "</p>" : "") + "</a>").join("")
+    : '<div class="card empty" style="grid-column:1/-1">ยังไม่ได้ใส่แบรนด์<br>เพิ่มได้ในหลังบ้าน แท็บเว็บประวัติ</div>';
+}
+function renderYT(f) {
+  const list = YT.filter(v => f === "all" || v.cat === f);
+  $("#ytList").innerHTML = list.map(v => {
+    const url = v.id ? "https://www.youtube.com/watch?v=" + encodeURIComponent(v.id) : "https://www.youtube.com/results?search_query=" + encodeURIComponent(v.q || v.t);
+    const img = v.id ? '<img loading="lazy" alt="" src="https://i.ytimg.com/vi/' + encodeURIComponent(v.id) + '/hqdefault.jpg">' : "";
+    return '<a class="card yt" href="' + url + '" target="_blank" rel="noopener"><div class="thumb">' + img + '<span class="play"></span></div><div class="meta"><h3>' + esc(v.t) + "</h3><p>" + esc(v.s || "") + (v.id ? "" : " · เปิดใน YouTube") + "</p></div></a>";
+  }).join("") || '<div class="card empty">ยังไม่มีคลิปในหมวดนี้</div>';
+}
+function renderEvents() {
+  const list = EVENTS.slice().sort((a, b) => String(b.date).localeCompare(String(a.date)));
+  $("#evList").innerHTML = list.length ? list.map(e => {
+    const [y, m] = String(e.date).split("-").map(Number);
+    return '<div class="card ev"><div class="d"><b>' + (m ? TH_MON[m - 1] : "") + "</b><small>" + (y ? y + 543 : "") + "</small></div><div><h3>" + esc(e.t) + "</h3><p>" + esc([e.p, e.d].filter(Boolean).join(" · ")) + "</p></div></div>";
+  }).join("") : '<div class="card empty">ยังไม่ได้ใส่งาน</div>';
+}
+
+seg($("#workSeg"), [["all", "ทั้งหมด"], ["series", "ซีรีส์"], ["movie", "ภาพยนตร์"], ["show", "รายการ"], ["mv", "MV"]], "all", k => { WF = k; renderWorks(k); });
+seg($("#ytSeg"), [["all", "ทั้งหมด"], ["clip", "คลิป / สัมภาษณ์"], ["song", "เพลง"]], "all", k => { YF = k; renderYT(k); });
+let WF = "all", YF = "all";
+function renderAll() { renderBio(); renderWorks(WF); renderPres(); renderYT(YF); renderEvents(); }
+renderAll();
+/* โหลดข้อมูลจากหลังบ้าน: เก็บสำเนาไว้ในเครื่อง เปิดครั้งต่อไปขึ้นทันที */
+function applyData(list) {
+  const n = list.filter(p => p && /^n/.test(p.id || "") && p.sec);
+  if (!n.length) return false;
+  const by = k => n.filter(p => p.sec === k).sort((a, b) => (b.created || 0) - (a.created || 0));
+  const bio = n.find(p => p.id === "nbio"); if (bio) BIO = bio;
+  WORKS = by("work").map(p => ({ y: Number(p.y) || 0, t: p.t, r: p.r, type: p.type || "series", main: !!p.main, d: p.d }));
+  PRESENTERS = by("pres").map(p => ({ name: p.name || "", note: p.note, url: p.url }));
+  YT = by("yt").map(p => ({ cat: p.cat || "clip", t: p.t, s: p.s, id: p.yid || "", q: p.q || p.t }));
+  EVENTS = by("ev").map(p => ({ date: p.date, t: p.t, p: p.p, d: p.d }));
+  renderAll(); return true;
+}
+try { const c = JSON.parse(localStorage.getItem("nsite-cache") || "null"); if (c) applyData(c); } catch (e) {}
+fetch(DB + "/boards/" + BOARD + "/posts.json", { cache: "no-store" }).then(r => r.ok ? r.json() : null).then(v => {
+  if (!v) return; const list = (Array.isArray(v) ? v : Object.values(v)).filter(p => p && /^n/.test(p.id || ""));
+  try { localStorage.setItem("nsite-cache", JSON.stringify(list)); } catch (e) {}
+  applyData(list);
+}).catch(() => {});
+
+/* เมนู + เปลี่ยนหน้าตาม #hash */
+const PAGES = ["home", "works", "presenter", "youtube", "events"];
+function setOpen(v) { document.body.classList.toggle("open", v); $("#menuBtn").setAttribute("aria-expanded", v); }
+$("#menuBtn").onclick = () => setOpen(true);
+$("#closeBtn").onclick = () => setOpen(false);
+$("#scrim").onclick = () => setOpen(false);
+document.addEventListener("keydown", e => { if (e.key === "Escape") setOpen(false); });
+function route() {
+  const h = (location.hash || "#home").slice(1), p = PAGES.includes(h) ? h : "home";
+  PAGES.forEach(k => $("#p-" + k).classList.toggle("on", k === p));
+  document.querySelectorAll(".drawer a").forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + p));
+  setOpen(false); window.scrollTo(0, 0);
+}
+window.addEventListener("hashchange", route); route();
+</script>
+</body>
+</html>
