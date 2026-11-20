@@ -7,121 +7,225 @@
 <meta name="description" content="รวมประวัติ ผลงาน Presenter YouTube และงานที่น้ำปิง นภัสกร เคยร่วม">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+  /* ธีมน่ารัก: กระต่ายหมูชมพู ก้อนเมฆ หัวใจ (ออกแบบเอง) */
   :root{
-    --pink:#F0288C; --pink2:#FF6FB1; --soft:#FFE3EF; --soft2:#FFF3F8;
-    --ink:#7A1F4E; --muted:#B0607F; --line:#F8C6DC; --card:#fff;
-    --r:22px; --shadow:0 6px 22px #F0288C1f;
+    --pink:#FF8FB8; --pinkD:#F0609A; --pinkL:#FFE0EC; --pinkXL:#FFF3F8; --blue:#A9D8F5; --blueD:#5FA8DB; --blueL:#E3F3FD;
+    --lilac:#D9C8F5; --butter:#FFF1B8; --ink:#6B4458; --muted:#A57A90; --r:26px;
+    --heart:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 18'%3E%3Cpath d='M10 17 1.6 8.8A4.8 4.8 0 0 1 10 3.3a4.8 4.8 0 0 1 8.4 5.5Z' fill='%23FFC6DC'/%3E%3C/svg%3E");
+    --star:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 0c1 5.5 4.5 9 10 10-5.5 1-9 4.5-10 10C9 14.5 5.5 11 0 10 5.5 9 9 5.5 10 0Z' fill='%23fff'/%3E%3C/svg%3E");
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{margin:0;font-family:Prompt,"Noto Sans Thai",system-ui,sans-serif;color:var(--ink);
-    background:linear-gradient(180deg,#FFD9EA 0,#FFEAF3 260px,#FFF6FA 100%) fixed;min-height:100vh;-webkit-tap-highlight-color:transparent}
+  body{margin:0;font-family:Mitr,"Noto Sans Thai",sans-serif;color:var(--ink);min-height:100vh;font-size:18px;
+    background:var(--heart) 6px 8px/18px 16px,var(--heart) 34px 38px/12px 11px,linear-gradient(180deg,#FFE4EF 0,#FFF2F7 40%,#EAF6FE 100%) fixed;
+    background-repeat:space,space,no-repeat;-webkit-tap-highlight-color:transparent}
+  body{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72'%3E%3Cpath d='M18 26 11.5 19.7A3.7 3.7 0 0 1 18 15.4a3.7 3.7 0 0 1 6.5 4.3Z' fill='%23FFCFE1'/%3E%3Cpath d='M54 58 49.7 53.8A2.5 2.5 0 0 1 54 50.9a2.5 2.5 0 0 1 4.3 2.9Z' fill='%23CFE8FA'/%3E%3Ccircle cx='52' cy='18' r='2' fill='%23FFE0EC'/%3E%3Ccircle cx='16' cy='54' r='2' fill='%23E3F3FD'/%3E%3C/svg%3E") 0 0/72px 72px repeat,linear-gradient(180deg,#FFEAF2,#FFF6FA 45%,#EEF7FE) fixed}
   a{color:inherit}
-  .wrap{max-width:720px;margin:0 auto;padding:0 16px 48px}
+  button,input{font-family:inherit}
+  .wrap{max-width:640px;margin:0 auto;padding:0 16px 40px}
 
-  /* แถบบน */
-  .top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;padding:12px 16px;
-    background:#FFE3EFcc;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid #F8C6DC80}
-  .brand{font-weight:700;font-size:20px;color:var(--pink);text-decoration:none;letter-spacing:.2px}
-  .brand small{display:block;font-size:11px;font-weight:500;color:var(--muted);letter-spacing:0;margin-top:-2px}
-  .menu-btn{margin-left:auto;width:44px;height:44px;border-radius:14px;border:2px solid var(--line);background:#fff;
-    display:grid;place-items:center;cursor:pointer;box-shadow:var(--shadow)}
-  .menu-btn i{display:block;width:18px;height:2px;border-radius:2px;background:var(--pink);box-shadow:0 -6px 0 var(--pink),0 6px 0 var(--pink)}
+  /* แถบบน: ก้อนเมฆ */
+  .top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:8px;padding:10px 16px 8px;background:#fff;
+    filter:drop-shadow(0 4px 0 #FFD3E4)}
+  .top::after{content:"";position:absolute;left:0;right:0;bottom:-11px;height:12px;
+    background:radial-gradient(circle at 12px 0,#fff 12px,transparent 12.5px) 0 0/24px 12px repeat-x}
+  .brand{display:flex;align-items:center;gap:8px;text-decoration:none;line-height:1}
+  .mascot{width:44px;height:44px;flex:none}
+  .brand b{display:block;font-weight:400;font-size:30px;color:var(--pinkD);letter-spacing:.5px}
+  .brand small{display:block;font-size:14px;color:var(--blueD);margin-top:1px}
+  .menu-btn{margin-left:auto;width:48px;height:48px;border-radius:50%;border:0;cursor:pointer;display:grid;place-items:center;
+    background:radial-gradient(circle at 35% 30%,#fff9 0 18%,transparent 19%),var(--pink);box-shadow:0 4px 0 var(--pinkD)}
+  .menu-btn i{display:block;width:18px;height:3px;border-radius:3px;background:#fff;box-shadow:0 -6px 0 #fff,0 6px 0 #fff}
+  .menu-btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--pinkD)}
 
   /* เมนูข้าง */
-  .scrim{position:fixed;inset:0;background:#7A1F4E40;opacity:0;pointer-events:none;transition:.25s;z-index:30}
-  .drawer{position:fixed;top:0;right:0;bottom:0;width:min(300px,82vw);background:#fff;z-index:31;transform:translateX(105%);
-    transition:transform .28s cubic-bezier(.2,.8,.2,1);padding:18px 16px;display:flex;flex-direction:column;gap:6px;
-    border-radius:26px 0 0 26px;box-shadow:-10px 0 30px #F0288C26}
+  .scrim{position:fixed;inset:0;background:#6B445840;opacity:0;pointer-events:none;transition:.25s;z-index:30}
+  .drawer{position:fixed;top:0;right:0;bottom:0;width:min(300px,84vw);z-index:31;transform:translateX(105%);transition:transform .3s cubic-bezier(.2,.8,.2,1);
+    padding:20px 18px;display:flex;flex-direction:column;gap:10px;border-radius:34px 0 0 34px;
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72'%3E%3Cpath d='M18 26 11.5 19.7A3.7 3.7 0 0 1 18 15.4a3.7 3.7 0 0 1 6.5 4.3Z' fill='%23FFCFE1'/%3E%3Cpath d='M54 58 49.7 53.8A2.5 2.5 0 0 1 54 50.9a2.5 2.5 0 0 1 4.3 2.9Z' fill='%23CFE8FA'/%3E%3Ccircle cx='52' cy='18' r='2' fill='%23FFE0EC'/%3E%3Ccircle cx='16' cy='54' r='2' fill='%23E3F3FD'/%3E%3C/svg%3E") 0 0/72px 72px,linear-gradient(180deg,#FFF3F8,#EAF6FE)}
   body.open .scrim{opacity:1;pointer-events:auto}
   body.open .drawer{transform:none}
-  .drawer h2{margin:4px 6px 12px;font-size:15px;color:var(--muted);font-weight:600}
-  .drawer a{display:flex;align-items:center;gap:12px;padding:14px 12px;border-radius:16px;text-decoration:none;font-weight:600;font-size:16px}
-  .drawer a .n{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--soft);color:var(--pink);font-size:13px;flex:none}
-  .drawer a.on,.drawer a:hover{background:var(--soft2)}
-  .drawer a.on .n{background:var(--pink);color:#fff}
-  .drawer .x{align-self:flex-end;width:40px;height:40px;border-radius:12px;border:0;background:var(--soft);color:var(--pink);font-size:22px;cursor:pointer}
+  .drawer h2{margin:0 4px 8px;font-weight:400;font-size:32px;color:var(--pinkD)}
+  .drawer a{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:999px;text-decoration:none;font-size:22px;background:#fff;box-shadow:0 4px 0 #FFD3E4}
+  .drawer a .n{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--pinkL);color:var(--pinkD);font-size:17px;flex:none}
+  .drawer a.on{background:var(--pink);color:#fff;box-shadow:0 4px 0 var(--pinkD)}
+  .drawer a.on .n{background:#fff}
+  .drawer .x{align-self:flex-end;width:44px;height:44px;border-radius:50%;border:0;background:var(--pinkL);color:var(--pinkD);font-size:24px;cursor:pointer}
 
   /* หน้า */
-  .page{display:none;animation:fade .3s ease}
+  .page{display:none;animation:pop .4s cubic-bezier(.3,1.4,.5,1)}
   .page.on{display:block}
-  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-  .ptitle{margin:22px 4px 14px;font-size:26px;font-weight:700}
-  .ptitle small{display:block;font-size:13px;font-weight:500;color:var(--muted);margin-top:2px}
-  .card{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px}
+  @keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.page,.float{animation:none!important}}
 
-  /* หน้าแรก: ประวัติ */
-  .hero{text-align:center;padding:26px 18px 22px;margin-top:18px}
-  .photo{width:min(220px,62vw);aspect-ratio:4/5;margin:0 auto 16px;border-radius:26px;overflow:hidden;
-    background:linear-gradient(160deg,var(--soft),#FFC9E1);border:4px solid #fff;box-shadow:0 10px 28px #F0288C33;display:grid;place-items:center;position:relative}
-  .photo img{width:100%;height:100%;object-fit:cover;display:block}
-  .photo .ph{font-size:13px;color:var(--muted);padding:12px;line-height:1.5}
-  .hero h1{margin:0;font-size:28px;line-height:1.2;color:var(--pink)}
-  .hero .en{margin:4px 0 0;font-size:14px;color:var(--muted);font-weight:500}
-  .hero .tag{display:inline-block;margin-top:12px;padding:6px 14px;border-radius:999px;background:var(--soft);font-size:13px;font-weight:600}
-  .bio{margin-top:14px;line-height:1.75;font-size:15px}
+  /* หัวข้อ: ริบบิ้น */
+  .ptitle{position:relative;display:block;width:max-content;max-width:100%;margin:30px auto 16px;padding:6px 30px 8px;font-weight:400;font-size:30px;line-height:1.15;text-align:center;
+    color:#fff;background:var(--pink);border-radius:999px;box-shadow:0 5px 0 var(--pinkD)}
+  .ptitle::before,.ptitle::after{content:"";position:absolute;top:50%;width:22px;height:22px;margin-top:-11px;background:var(--star) center/contain no-repeat}
+  .ptitle::before{left:-28px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 0c1 5.5 4.5 9 10 10-5.5 1-9 4.5-10 10C9 14.5 5.5 11 0 10 5.5 9 9 5.5 10 0Z' fill='%23FF8FB8'/%3E%3C/svg%3E")}
+  .ptitle::after{right:-28px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 0c1 5.5 4.5 9 10 10-5.5 1-9 4.5-10 10C9 14.5 5.5 11 0 10 5.5 9 9 5.5 10 0Z' fill='%235FA8DB'/%3E%3C/svg%3E")}
+  .ptitle small{display:block;font-size:15px;opacity:.95}
+
+  .card{position:relative;background:#fff;border-radius:var(--r);padding:18px;box-shadow:0 6px 0 #FFD3E4,0 10px 24px #FF8FB824}
+
+  /* หน้าแรก */
+  .hero{margin-top:26px;padding:34px 16px 22px;text-align:center;background:linear-gradient(180deg,var(--blueL),#fff 70%);overflow:visible;box-shadow:0 6px 0 #CDE8FA,0 10px 24px #5FA8DB22}
+  .hero::before{content:"";position:absolute;left:0;right:0;top:-12px;height:13px;background:radial-gradient(circle at 13px 13px,var(--blueL) 12px,transparent 12.5px) 0 0/26px 13px repeat-x;border-radius:20px 20px 0 0}
+  .float{position:absolute;width:22px;height:20px;background:var(--heart) center/contain no-repeat;animation:bob 3s ease-in-out infinite}
+  .float.s{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 0c1 5.5 4.5 9 10 10-5.5 1-9 4.5-10 10C9 14.5 5.5 11 0 10 5.5 9 9 5.5 10 0Z' fill='%23A9D8F5'/%3E%3C/svg%3E")}
+  .float.a{top:30px;left:20px;width:30px;height:27px}
+  .float.b{top:70px;right:22px;animation-delay:-1s}
+  .float.c{top:210px;left:16px;width:18px;height:18px;animation-delay:-2s}
+  .float.d{top:24px;right:60px;width:24px;height:24px;animation-delay:-.5s}
+  @keyframes bob{50%{transform:translateY(-6px) rotate(8deg)}}
+  /* โพลารอยด์ หูกระต่าย + โบว์ */
+  .pframe{position:relative;width:min(220px,62vw);margin:18px auto 0;transform:rotate(-2.5deg)}
+  .pframe .ears{position:absolute;left:50%;top:-44px;width:120px;height:60px;margin-left:-60px;z-index:0}
+  .photo{position:relative;z-index:1;aspect-ratio:4/5;padding:10px 10px 38px;background:#fff;border-radius:20px;box-shadow:0 6px 0 #FFD3E4,0 12px 26px #FF8FB833}
+  .photo::before{content:"";position:absolute;inset:10px 10px 38px;background:linear-gradient(160deg,var(--pinkL),#FFC6DC);border-radius:14px}
+  .photo img{position:relative;width:100%;height:100%;object-fit:cover;display:block;border-radius:14px}
+  .photo .ph{position:absolute;inset:10px 10px 38px;display:grid;place-items:center;font-size:17px;color:var(--pinkD);padding:12px;line-height:1.4}
+  .photo img + .ph{display:none}
+  .photo::after{content:"♡ namping ♡";position:absolute;left:0;right:0;bottom:8px;font-size:18px;color:var(--pink)}
+  .pframe .bow{position:absolute;left:50%;top:-14px;width:64px;height:34px;margin-left:-32px;z-index:2}
+  /* ชื่อในก้อนเมฆ */
+  .nametag{position:relative;display:inline-block;margin:24px auto 0;padding:14px 26px 12px;background:#fff;border-radius:40px;box-shadow:0 5px 0 #FFD3E4}
+  .nametag::before,.nametag::after{content:"";position:absolute;background:#fff;border-radius:50%;z-index:-1}
+  .nametag::before{width:70px;height:70px;left:18px;top:-24px}
+  .nametag::after{width:52px;height:52px;right:26px;top:-16px}
+  .nametag .hl{display:block;font-size:17px;color:var(--blueD)}
+  .nametag .sub{display:none}
+  .nametag .nm{display:block}
+  .hero h1{margin:2px 0 0;font-weight:400;font-size:clamp(24px,7.4vw,34px);line-height:1.15;color:var(--pinkD);white-space:nowrap}
+  .hero .en{margin:2px 0 0;font-size:clamp(14px,4.2vw,18px);color:var(--blueD);white-space:nowrap}
+  .hero .tag{display:inline-block;margin-top:14px;padding:6px 16px;border-radius:999px;background:var(--butter);font-size:18px;color:#9A7A2E;box-shadow:0 3px 0 #F2DC8A}
+  .hero br{display:none}
+
+  .bio{font-size:19px;line-height:1.7}
   .bio p{margin:0 0 10px}
+  .bio p:first-child::first-letter{font-size:1.6em;color:var(--pinkD)}
   .facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-  .fact{background:var(--soft2);border-radius:16px;padding:12px}
-  .fact small{display:block;font-size:12px;color:var(--muted)}
-  .fact b{font-size:15px;font-weight:600}
-  .social{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-  .social a{flex:1 1 30%;text-align:center;padding:11px 8px;border-radius:14px;background:var(--pink);color:#fff;text-decoration:none;font-weight:600;font-size:14px}
-  .social a small{display:block;font-weight:400;font-size:11px;opacity:.9}
-  .quick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-  .quick a{display:block;padding:16px 14px;border-radius:18px;background:#fff;border:1.5px solid var(--line);text-decoration:none;box-shadow:var(--shadow)}
-  .quick a b{display:block;font-size:16px}
-  .quick a small{color:var(--muted);font-size:12px}
+  .fact{background:var(--pinkXL);border-radius:20px;padding:10px 14px;text-align:center}
+  .fact:nth-child(2),.fact:nth-child(3){background:var(--blueL)}
+  .fact small{display:block;font-size:15px;color:var(--muted)}
+  .fact b{font-weight:400;font-size:20px;color:var(--pinkD);white-space:nowrap}
+  .fact:nth-child(2) b,.fact:nth-child(3) b{color:var(--blueD)}
+  .social{display:flex;gap:8px;margin-top:14px}
+  .social a{flex:1 1 0;min-width:0;text-align:center;padding:9px 4px;border-radius:999px;background:var(--pink);color:#fff;text-decoration:none;font-size:18px;box-shadow:0 4px 0 var(--pinkD)}
+  .social a:nth-child(2){background:var(--blueD);box-shadow:0 4px 0 #3F86BB}
+  .social a:nth-child(3){background:#B79BEA;box-shadow:0 4px 0 #9478CC}
+  .social a small{display:block;font-size:13px;opacity:.95;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+  /* ปุ่มลัด: ลูกกวาด */
+  .quick{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px}
+  .quick a{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;padding:16px 10px 14px;border-radius:28px;text-decoration:none;background:#fff;box-shadow:0 6px 0 #FFD3E4}
+  .quick a .ic{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;margin-bottom:6px;background:var(--pinkL)}
+  .quick a:nth-child(2) .ic{background:var(--blueL)} .quick a:nth-child(3) .ic{background:#EFE6FD} .quick a:nth-child(4) .ic{background:var(--butter)}
+  .quick a .ic svg{width:30px;height:30px}
+  .quick a b{font-weight:400;font-size:22px;color:var(--pinkD);white-space:nowrap}
+  .quick a small{font-size:14px;color:var(--muted);line-height:1.3}
+  .quick a:active{transform:translateY(3px);box-shadow:0 3px 0 #FFD3E4}
+
+  /* แท็บย่อย */
+  .seg{display:flex;gap:8px;margin:0 0 16px;overflow-x:auto;padding:2px 2px 8px;justify-content:flex-start}
+  .seg button{flex:none;white-space:nowrap;border:0;background:#fff;font-size:19px;color:var(--muted);padding:6px 16px;border-radius:999px;cursor:pointer;box-shadow:0 3px 0 #FFD3E4}
+  .seg button.on{background:var(--pink);color:#fff;box-shadow:0 3px 0 var(--pinkD)}
 
   /* ผลงาน */
-  .seg{display:flex;gap:6px;background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:4px;margin:0 0 14px;overflow-x:auto}
-  .seg button{flex:1;white-space:nowrap;border:0;background:none;font:inherit;font-size:14px;font-weight:600;color:var(--muted);padding:8px 12px;border-radius:999px;cursor:pointer}
-  .seg button.on{background:var(--pink);color:#fff}
-  .tl{position:relative;padding-left:22px}
-  .tl::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:var(--line);border-radius:2px}
-  .work{position:relative;margin-bottom:12px}
-  .work::before{content:"";position:absolute;left:-21px;top:22px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid var(--pink)}
+  .tl{position:relative;padding-left:26px}
+  .tl::before{content:"";position:absolute;left:10px;top:8px;bottom:8px;border-left:4px dotted #FFB8D2}
+  .work{position:relative;margin-bottom:16px}
+  .work::before{content:"";position:absolute;left:-27px;top:18px;width:24px;height:22px;background:var(--heart) center/contain no-repeat;filter:saturate(2.2) brightness(.95)}
   .work .card{padding:14px 16px}
-  .work .yr{font-size:12px;font-weight:700;color:var(--pink)}
-  .work h3{margin:2px 0 4px;font-size:17px}
-  .work p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.5}
-  .chip{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--soft);color:var(--ink);margin-right:4px}
-  .chip.main{background:var(--pink);color:#fff}
+  .work:nth-child(even) .card{box-shadow:0 6px 0 #CDE8FA,0 10px 24px #5FA8DB1f}
+  .work .yr{display:inline-block;font-size:15px;color:#fff;background:var(--blueD);padding:2px 12px;border-radius:999px}
+  .work:nth-child(even) .yr{background:var(--pink)}
+  .work h3{margin:6px 0 6px;font-weight:400;font-size:23px;line-height:1.2;color:var(--pinkD)}
+  .work p{margin:0;font-size:17px;color:var(--muted);line-height:1.45}
+  .chip{display:inline-block;font-size:15px;padding:2px 11px;border-radius:999px;background:var(--blueL);color:var(--blueD);margin:0 4px 3px 0}
+  .chip.main{background:var(--butter);color:#9A7A2E}
 
-  /* Presenter / งานที่ร่วม */
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
-  .brandc{padding:16px;text-align:center}
-  .logo{width:64px;height:64px;margin:0 auto 10px;border-radius:18px;background:var(--soft);display:grid;place-items:center;font-weight:700;font-size:22px;color:var(--pink)}
-  .brandc h3{margin:0;font-size:15px}
-  .brandc p{margin:4px 0 0;font-size:12px;color:var(--muted)}
-  .ev{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;margin-bottom:10px}
-  .ev .d{flex:none;width:58px;text-align:center;background:var(--soft);border-radius:14px;padding:8px 4px;line-height:1.1}
-  .ev .d b{display:block;font-size:20px;color:var(--pink)}
-  .ev .d small{font-size:11px;color:var(--muted)}
-  .ev h3{margin:0 0 3px;font-size:16px}
-  .ev p{margin:0;font-size:13px;color:var(--muted);line-height:1.5}
-  .empty{text-align:center;color:var(--muted);font-size:14px;padding:22px}
+  /* Presenter / งาน */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:14px}
+  .brandc{padding:18px 12px;text-align:center;text-decoration:none}
+  .logo{width:68px;height:68px;margin:0 auto 10px;border-radius:50%;background:var(--pinkL);display:grid;place-items:center;font-size:24px;color:var(--pinkD);box-shadow:inset 0 -4px 0 #FFC6DC}
+  .brandc h3{margin:0;font-weight:400;font-size:22px}
+  .brandc p{margin:4px 0 0;font-size:16px;color:var(--muted)}
+  .ev{display:flex;gap:14px;align-items:center;padding:14px 16px;margin-bottom:14px}
+  .ev .d{flex:none;width:64px;text-align:center;background:var(--pinkL);color:var(--pinkD);border-radius:20px;padding:8px 4px 6px;line-height:1.1}
+  .ev:nth-child(even) .d{background:var(--blueL);color:var(--blueD)}
+  .ev .d b{display:block;font-weight:400;font-size:22px}
+  .ev .d small{font-size:14px}
+  .ev h3{margin:0 0 3px;font-weight:400;font-size:22px;line-height:1.2}
+  .ev p{margin:0;font-size:17px;color:var(--muted);line-height:1.4}
+  .empty{text-align:center;color:var(--muted);font-size:18px;padding:22px}
 
   /* YouTube */
-  .yt{display:block;text-decoration:none;overflow:hidden;padding:0;margin-bottom:12px}
-  .thumb{aspect-ratio:16/9;background:linear-gradient(135deg,#FFC9E1,var(--soft));position:relative;display:grid;place-items:center}
+  .yt{display:block;text-decoration:none;padding:10px;margin-bottom:16px}
+  .thumb{aspect-ratio:16/9;border-radius:18px;overflow:hidden;position:relative;display:grid;place-items:center;
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72'%3E%3Cpath d='M18 26 11.5 19.7A3.7 3.7 0 0 1 18 15.4a3.7 3.7 0 0 1 6.5 4.3Z' fill='%23FFCFE1'/%3E%3Cpath d='M54 58 49.7 53.8A2.5 2.5 0 0 1 54 50.9a2.5 2.5 0 0 1 4.3 2.9Z' fill='%23CFE8FA'/%3E%3Ccircle cx='52' cy='18' r='2' fill='%23FFE0EC'/%3E%3Ccircle cx='16' cy='54' r='2' fill='%23E3F3FD'/%3E%3C/svg%3E") 0 0/48px 48px,linear-gradient(135deg,var(--pinkL),var(--blueL))}
   .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-  .play{position:relative;width:58px;height:40px;border-radius:12px;background:var(--pink);box-shadow:0 4px 14px #0003}
-  .play::after{content:"";position:absolute;left:23px;top:12px;border-left:15px solid #fff;border-top:8px solid transparent;border-bottom:8px solid transparent}
-  .yt .meta{padding:12px 16px}
-  .yt h3{margin:0;font-size:16px}
-  .yt p{margin:3px 0 0;font-size:12.5px;color:var(--muted)}
+  .play{position:relative;width:60px;height:60px;border-radius:50%;background:#fff;box-shadow:0 4px 0 #FFD3E4}
+  .play::after{content:"";position:absolute;left:24px;top:19px;border-left:17px solid var(--pink);border-top:11px solid transparent;border-bottom:11px solid transparent}
+  .yt .meta{padding:10px 6px 2px}
+  .yt h3{margin:0;font-weight:400;font-size:22px;color:var(--pinkD)}
+  .yt p{margin:3px 0 0;font-size:16px;color:var(--muted)}
 
-  .note{margin-top:16px;font-size:12px;color:var(--muted);text-align:center;line-height:1.6}
-  footer{text-align:center;font-size:12px;color:var(--muted);padding:24px 16px 32px}
-  @media(min-width:640px){.facts{grid-template-columns:repeat(4,1fr)}.hero{padding:32px}}
+  footer{text-align:center;font-size:15px;color:var(--muted);padding:10px 16px 34px}
+  footer .mascot{display:block;width:64px;height:64px;margin:0 auto 6px}
+  @media(min-width:640px){.facts{grid-template-columns:repeat(4,1fr)}}
+  /* การ์ดผลงานแบบกะทัดรัด */
+  .work{margin-bottom:10px}
+  .work .card{padding:10px 14px 11px;border-radius:20px;box-shadow:0 4px 0 #FFD3E4}
+  .work:nth-child(even) .card{box-shadow:0 4px 0 #CDE8FA}
+  .work::before{width:18px;height:16px;left:-24px;top:14px}
+  .work .yr{font-size:13px;padding:1px 10px}
+  .work h3{font-size:19px;margin:4px 0 4px}
+  .work .chip{font-size:13px;padding:1px 9px;margin-bottom:2px}
+  .work p{font-size:15px;line-height:1.35;margin-top:2px!important}
+
+  /* กลับมาใช้ฟอนต์ Mitr ทั้งเว็บ · ปรับขนาดให้พอดีกับ Mitr */
+  body{font-size:15px}
+  .brand b{font-size:24px;font-weight:600}
+  .brand small{font-size:11px}
+  .drawer h2{font-size:24px;font-weight:600}
+  .drawer a{font-size:16px;font-weight:500}
+  .drawer a .n{font-size:13px}
+  .ptitle{font-size:22px;font-weight:600}
+  .ptitle small{font-size:12px;font-weight:400}
+  .photo .ph{font-size:13px}
+  .photo::after{font-size:13px;bottom:11px}
+  .nametag .hl{font-size:12px}
+  .hero h1{font-size:clamp(19px,6vw,26px);font-weight:600}
+  .hero .en{font-size:clamp(11px,3.4vw,14px)}
+  .hero .tag{font-size:13px;font-weight:500}
+  .bio{font-size:15px;line-height:1.8}
+  .bio p:first-child::first-letter{font-size:1em;color:inherit}
+  .fact small{font-size:11px}
+  .fact b{font-size:15px;font-weight:600}
+  .social a{font-size:14px;font-weight:500}
+  .social a small{font-size:10.5px;font-weight:400}
+  .quick a b{font-size:17px;font-weight:600}
+  .quick a small{font-size:11.5px}
+  .seg button{font-size:14px;font-weight:500;padding:7px 14px}
+  .work .yr{font-size:11px}
+  .work h3{font-size:15.5px;font-weight:600}
+  .work .chip,.chip{font-size:11px}
+  .work p{font-size:12.5px;line-height:1.5}
+  .brandc h3,.ev h3,.yt h3{font-size:16px;font-weight:600}
+  .brandc p,.ev p,.yt p{font-size:12.5px}
+  .ev .d b{font-size:17px;font-weight:600}
+  .ev .d small{font-size:11px}
+  .logo{font-size:20px;font-weight:600}
+  .empty{font-size:14px}
+  footer{font-size:12px}
 </style>
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="#home">Namping<small>น้ำปิง นภัสกร</small></a>
+  <a class="brand" href="#home"><svg class="mascot" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="22" cy="16" rx="7" ry="15" fill="#fff" stroke="#FFB3CF" stroke-width="2.5" transform="rotate(-12 22 16)"/><ellipse cx="22" cy="17" rx="3.2" ry="10" fill="#FFC6DC" transform="rotate(-12 22 17)"/><ellipse cx="42" cy="16" rx="7" ry="15" fill="#fff" stroke="#FFB3CF" stroke-width="2.5" transform="rotate(12 42 16)"/><ellipse cx="42" cy="17" rx="3.2" ry="10" fill="#FFC6DC" transform="rotate(12 42 17)"/><circle cx="32" cy="40" r="20" fill="#FFD3E4" stroke="#FFB3CF" stroke-width="2.5"/><ellipse cx="32" cy="45" rx="8" ry="5.5" fill="#FF9EC1"/><circle cx="29" cy="45" r="1.5" fill="#E2507F"/><circle cx="35" cy="45" r="1.5" fill="#E2507F"/><circle cx="24" cy="36" r="2.2" fill="#6B4458"/><circle cx="40" cy="36" r="2.2" fill="#6B4458"/><ellipse cx="18.5" cy="43" rx="3.5" ry="2.2" fill="#FF8FB8" opacity=".6"/><ellipse cx="45.5" cy="43" rx="3.5" ry="2.2" fill="#FF8FB8" opacity=".6"/></svg><span><b>Namping</b><small>น้ำปิง นภัสกร</small></span></a>
   <button class="menu-btn" id="menuBtn" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="drawer"><i></i></button>
 </header>
 <div class="scrim" id="scrim"></div>
@@ -139,24 +243,28 @@
   <!-- หน้าแรก: ประวัติน้ำปิง -->
   <section class="page" id="p-home">
     <div class="card hero">
-      <div class="photo" id="photo"><div class="ph">ใส่รูปน้ำปิง<br>ในหลังบ้าน หรือไฟล์ namping.jpg</div></div>
-      <h1 id="bTh"></h1>
-      <p class="en" id="bEn"></p>
-      <span class="tag" id="bTag"></span>
+      <i class="float a"></i><i class="float s b"></i><i class="float c"></i><i class="float s d"></i>
+      <div class="pframe">
+        <svg class="ears" viewBox="0 0 120 60" aria-hidden="true"><ellipse cx="34" cy="34" rx="15" ry="32" fill="#fff" stroke="#FFB3CF" stroke-width="3" transform="rotate(-14 34 34)"/><ellipse cx="34" cy="36" rx="7" ry="22" fill="#FFC6DC" transform="rotate(-14 34 36)"/><ellipse cx="86" cy="34" rx="15" ry="32" fill="#fff" stroke="#FFB3CF" stroke-width="3" transform="rotate(14 86 34)"/><ellipse cx="86" cy="36" rx="7" ry="22" fill="#FFC6DC" transform="rotate(14 86 36)"/></svg>
+        <div class="photo" id="photo"><div class="ph">ใส่รูปน้ำปิง<br>ในหลังบ้าน หรือไฟล์ namping.jpg</div></div>
+        <svg class="bow" viewBox="0 0 64 34" aria-hidden="true"><path d="M32 17C22 2 4 2 4 17s18 15 28 0Z" fill="#FF8FB8"/><path d="M32 17C42 2 60 2 60 17S42 32 32 17Z" fill="#FF8FB8"/><path d="M32 17 24 33h6l2-5 2 5h6Z" fill="#F0609A"/><circle cx="32" cy="17" r="6" fill="#F0609A"/><path d="M12 12c3-3 8-3 11 0" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"/></svg>
+      </div>
+      <div class="nametag"><span class="hl">hello ♡ my name is</span><span class="sub">MY NAME IS</span><span class="nm"><h1 id="bTh"></h1><p class="en" id="bEn"></p></span></div>
+      <br><span class="tag" id="bTag"></span>
     </div>
 
     <h2 class="ptitle">ประวัติน้ำปิง</h2>
-    <div class="card">
+    <div class="card biocard">
       <div class="bio" id="bBio"></div>
       <div class="facts" id="bFacts"></div>
       <div class="social" id="bSocial"></div>
     </div>
 
     <div class="quick">
-      <a href="#works"><b>ผลงาน</b><small>ซีรีส์ หนัง รายการ</small></a>
-      <a href="#presenter"><b>Presenter</b><small>แบรนด์ที่น้ำปิงเป็นพรีเซนเตอร์</small></a>
-      <a href="#youtube"><b>YouTube</b><small>คลิปและเพลง</small></a>
-      <a href="#events"><b>งานที่เคยร่วม</b><small>อีเวนต์และงานแบรนด์</small></a>
+      <a href="#works"><span class="ic"><svg viewBox="0 0 32 32"><path d="M16 4l3.6 7.4 8.1 1.2-5.9 5.7 1.4 8.1L16 22.6l-7.2 3.8 1.4-8.1-5.9-5.7 8.1-1.2Z" fill="#FF8FB8"/></svg></span><b>ผลงาน</b><small>ซีรีส์ หนัง รายการ</small></a>
+      <a href="#presenter"><span class="ic"><svg viewBox="0 0 32 32"><path d="M16 9C11 1 2 4 4 12c1 5 7 9 12 14 5-5 11-9 12-14 2-8-7-11-12-3Z" fill="#5FA8DB"/></svg></span><b>Presenter</b><small>แบรนด์ที่น้ำปิงเป็นพรีเซนเตอร์</small></a>
+      <a href="#youtube"><span class="ic"><svg viewBox="0 0 32 32"><rect x="3" y="7" width="26" height="18" rx="7" fill="#B79BEA"/><path d="M13 11.5v9l8-4.5Z" fill="#fff"/></svg></span><b>YouTube</b><small>คลิปและเพลง</small></a>
+      <a href="#events"><span class="ic"><svg viewBox="0 0 32 32"><path d="M16 15c-5-8-13-8-13 0s8 8 13 0Zm0 0c5-8 13-8 13 0s-8 8-13 0Z" fill="#F2C94C"/><circle cx="16" cy="15" r="3.5" fill="#E0A800"/><path d="M14 17l-4 11h4l2-4 2 4h4l-4-11Z" fill="#E0A800"/></svg></span><b>งานที่เคยร่วม</b><small>อีเวนต์และงานแบรนด์</small></a>
     </div>
   </section>
 
@@ -186,7 +294,7 @@
     <div id="evList"></div>
   </section>
 </main>
-<footer>เว็บไซต์โดยแฟนคลับ · ไม่ใช่เว็บทางการของศิลปินหรือต้นสังกัด</footer>
+<footer><svg class="mascot" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="22" cy="16" rx="7" ry="15" fill="#fff" stroke="#FFB3CF" stroke-width="2.5" transform="rotate(-12 22 16)"/><ellipse cx="22" cy="17" rx="3.2" ry="10" fill="#FFC6DC" transform="rotate(-12 22 17)"/><ellipse cx="42" cy="16" rx="7" ry="15" fill="#fff" stroke="#FFB3CF" stroke-width="2.5" transform="rotate(12 42 16)"/><ellipse cx="42" cy="17" rx="3.2" ry="10" fill="#FFC6DC" transform="rotate(12 42 17)"/><circle cx="32" cy="40" r="20" fill="#FFD3E4" stroke="#FFB3CF" stroke-width="2.5"/><ellipse cx="32" cy="45" rx="8" ry="5.5" fill="#FF9EC1"/><circle cx="29" cy="45" r="1.5" fill="#E2507F"/><circle cx="35" cy="45" r="1.5" fill="#E2507F"/><circle cx="24" cy="36" r="2.2" fill="#6B4458"/><circle cx="40" cy="36" r="2.2" fill="#6B4458"/><ellipse cx="18.5" cy="43" rx="3.5" ry="2.2" fill="#FF8FB8" opacity=".6"/><ellipse cx="45.5" cy="43" rx="3.5" ry="2.2" fill="#FF8FB8" opacity=".6"/></svg>เว็บไซต์โดยแฟนคลับ · ไม่ใช่เว็บทางการของศิลปินหรือต้นสังกัด</footer>
 
 <script>
 /* ข้อมูลจริงมาจากหลังบ้าน (namping-admin.html แท็บ "เว็บประวัติ") ผ่าน Firebase
@@ -242,7 +350,7 @@ function renderBio() {
   $("#bBio").innerHTML = String(B.bio || "").split(/\n\s*\n/).filter(x => x.trim()).map(x => "<p>" + esc(x.trim()).replace(/\n/g, "<br>") + "</p>").join("");
   $("#bFacts").innerHTML = [["วันเกิด", B.birth], ["บ้านเกิด", B.home], ["ส่วนสูง", B.height], ["สังกัด", B.agency]].filter(x => x[1]).map(([k, v]) => '<div class="fact"><small>' + k + "</small><b>" + esc(v) + "</b></div>").join("");
   const h = v => encodeURIComponent(String(v || "").replace(/^@/, ""));
-  $("#bSocial").innerHTML = [["Instagram", B.ig, "https://www.instagram.com/" + h(B.ig) + "/"], ["X", B.x, "https://x.com/" + h(B.x)], ["TikTok", B.tt, "https://www.tiktok.com/@" + h(B.tt)]].filter(x => x[1]).map(([n, v, u]) => '<a href="' + u + '" target="_blank" rel="noopener">' + n + "<small>@" + esc(String(v).replace(/^@/, "")) + "</small></a>").join("");
+  $("#bSocial").innerHTML = [["IG", B.ig, "https://www.instagram.com/" + h(B.ig) + "/"], ["X", B.x, "https://x.com/" + h(B.x)], ["TikTok", B.tt, "https://www.tiktok.com/@" + h(B.tt)]].filter(x => x[1]).map(([n, v, u]) => '<a href="' + u + '" target="_blank" rel="noopener">' + n + "<small>@" + esc(String(v).replace(/^@/, "")) + "</small></a>").join("");
 }
 function renderWorks(f) {
   const list = WORKS.filter(w => f === "all" || w.type === f).sort((a, b) => b.y - a.y);
